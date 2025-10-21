@@ -5,10 +5,15 @@ const App: FunctionComponent = () => {
   const nom: string = 'Toto';
   
   const [compteur, setCompteur] = useState(0);
+  const [recherche, setRecherche] = useState('');
   
   useEffect(() => {
     document.title = `Compteur : ${compteur}`;
   }, [compteur]);
+  
+  const superHerosFiltres = superHerosData.filter(hero =>
+    hero.name.toLowerCase().includes(recherche.toLowerCase())
+  );
   
   return (
     <div>
@@ -28,6 +33,21 @@ const App: FunctionComponent = () => {
       
       <div>
         <p>Il y a {superHerosData.length} super-héros dans la base.</p>
+        
+        <div>
+          <input
+            type="text"
+            placeholder="Rechercher un super-héros"
+            value={recherche}
+            onChange={(e) => setRecherche(e.target.value)}
+          />
+        </div>
+        
+        <ul>
+          {superHerosFiltres.map(hero => (
+            <li key={hero.id}>{hero.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   )
